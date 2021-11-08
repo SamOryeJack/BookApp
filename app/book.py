@@ -3,8 +3,8 @@ from ebooklib import epub
 
 raw = epub.read_epub('app/Redwall_books/Redwall.epub')
 book = raw.get_items_of_type(ebooklib.ITEM_DOCUMENT)
-for items in book:
-    print(items)
+# for items in book:
+    # print(items)
 
 # print(book.get_metadata('DC','subject'))
 # print(type(book.get_items))

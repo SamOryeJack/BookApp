@@ -7,6 +7,9 @@ name = "pypi"
 flask = "*"
 python-dotenv = "*"
 pylint = "*"
+ebooklib = "*"
+nltk = "*"
+bs4 = "*"
 
 [dev-packages]
 
