@@ -1,29 +1,32 @@
+#what is logging?
 from logging import error
+
+#Where do we use this?
+
+#where?
+import pandas as pd
+#I used the ebooklib library in epub2thtml to extract the HTML out of the epub file using the “item.get_content()
 import ebooklib
 from ebooklib import epub
-import pandas as pd
+#BeautifulSoup provides a simple way to find text content (i.e. non-HTML) from the HTML and is used in chap2text
+#https://medium.com/@zazazakaria18/turn-your-ebook-to-text-with-python-in-seconds-2a1e42804913
 from bs4 import BeautifulSoup
-
+#re is used in ...?
 import re
-
-from nltk.tokenize import word_tokenize
-from nltk.tokenize import sent_tokenize
-from nltk.util import pr
-
+# Flask is used in...?
+# Blueprint is usd in...?
+# request is used in...?
 from flask import Flask, Blueprint, request
-
+#string is used in...?
 import string
-
+#word_tokenize, sent_tokenize
 from nltk.tokenize import word_tokenize, sent_tokenize
-
 import os 
 
 book_routes = Blueprint('bookv2', __name__)
-
-# pattern1 = re.compile("""['b'<\?xml version=\'1.0\' encoding=\'utf-8\'?>\n<!DOCTYPE html>\n<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" epub:prefix="z3998: http://www.daisy.org/z3998/2012/vocab/structure/#" lang="en" xml:lang="en">\n  <head/>\n  <body><div class="image">']""")
-
 pattern1 = re.compile("""[<span class="small">]*$""")
 
+#epub2thml return chapters which is used in...
 def epub2thtml(epub_path):
     book = epub.read_epub(epub_path)
     chapters = []
@@ -37,6 +40,7 @@ def epub2thtml(epub_path):
             
     return chapters
 
+# Now I will utilise the previous function to create another one that turns a list of HTML into a list of clean text
 def thtml2ttext(thtml):
     Output = []
     for html in thtml:
@@ -66,15 +70,15 @@ def chap2text(chap):
             output += '{} '.format(t)
     return output
 
-
-
 def epub2text(epub_path):
     chapters = epub2thtml(epub_path)
     ttext = thtml2ttext(chapters)
     return ttext
 
-html = epub2text('app/Redwall_books/Redwall.epub')
+html = epub2text('app/Redwall_books/9_Redwall.epub')
 
+
+# +++++++++++================= Routes ========================+++++++++++++++
 
 @book_routes.route('/')
 def home():
@@ -82,10 +86,24 @@ def home():
     all_books = {}
 
     directory = r'app/Redwall_books'
+    
     for file_name in os.listdir(directory):
         all_books[file_name] = file_name
     
     return all_books
+
+# this route gives a particular book
+@book_routes.route('/<book_title>')
+def book_finder(book_title):
+    book_title = book_title.lower()
+    html = epub2text(f'app/Redwall_books/{book_title}.epub')
+
+    my_book = {}
+    count = 1
+    for item in html:
+        my_book[count] = item
+        count += 1
+    return my_book
 
 # this route give a cetain page/chapter/section
 @book_routes.route('<book_title>/<int:my_page>')
@@ -101,18 +119,7 @@ def word_count(my_page, book_title):
         count += 1
     return my_book[my_page]
 
-# this route gives a particular book
-@book_routes.route('/<book_title>')
-def book_finder(book_title):
-    book_title = book_title.lower()
-    html = epub2text(f'app/Redwall_books/{book_title}.epub')
 
-    my_book = {}
-    count = 1
-    for item in html:
-        my_book[count] = item
-        count += 1
-    return my_book
 
 # this route give you a certain number of words
 

@@ -1,0 +1,51 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    border: 0px
+}
+
+.container{
+    border: 4px solid pink;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+}
+.head{
+    border: 1px solid red;
+    width: 100%;
+    height: 10%;
+    background: #8F2727;
+}
+
+.book_body{
+    border: 2px solid green;
+    width: 100%;
+    height: 80%;
+}
+
+.foot{
+    display: flex;
+    border: 1px solid blue;
+    width: 100%;
+    height: 10%;
+}
+
+.stats{
+    border: 1px dotted orangered;
+    
+    width: 50%;
+    height: 100%;
+}
+
+.toolbar{
+    border: 1px dotted blueviolet;
+    width: 50%;
+    height: 100%;
+}
+
+.book_select{
+    border: 1px solid blue;
+    display: flex;
+    justify-content: space-around;
+}

@@ -6,7 +6,7 @@ import ebooklib
 from ebooklib import epub
 from bs4 import BeautifulSoup
 
-book = epub.read_epub('app/Redwall_books/Redwall.epub')
+book = epub.read_epub('app/Redwall_books/9_Redwall.epub')
 
 bp = Blueprint("books", __name__, url_prefix='/books')
 @bp.route("/")
